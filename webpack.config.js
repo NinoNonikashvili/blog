@@ -1,5 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 
 module.exports = {
     mode: 'development',
@@ -10,7 +12,9 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             template: 'src/index.html'
-        })
+        }),
+      //  new CleanWebpackPlugin()
+      
     ],
     module: {
         rules: [
@@ -25,7 +29,33 @@ module.exports = {
               "sass-loader",
             ],
           },
+          {
+            test: /\.(woff|woff2|eot|ttf|otf)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: 'fonts/[name].[ext]',
+                },
+              },
+            ],
+      
+          },
+          {
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            use:[
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '[name].[ext]',
+                  outputPath: 'imgs/'
+                }
+              }
+              
+            ]
+          }
         ],
+
       },
 
 }

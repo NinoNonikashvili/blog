@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "firaGo";
+  src: url(../fonts/FiraGO-Regular.eot) format("eot"), url(../fonts/FiraGO-Regular.otf) format("otf"), url(../fonts/FiraGO-Regular.ttf) format("ttf"), url(../fonts/FiraGO-Regular.woff) format("woff"), url(../fonts/FiraGO-Regular.woff2) format("woff2");
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+button,
+a,
+li,
+ul,
+label,
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+  font-family: "firaGo";
+  font-style: normal;
+  color: #1A1A1F;
+}
+h1:focus,
+h2:focus,
+h3:focus,
+h4:focus,
+h5:focus,
+h6:focus,
+p:focus,
+button:focus,
+a:focus,
+li:focus,
+ul:focus,
+label:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 4.5rem;
+}
+
+h2 {
+  font-weight: 700;
+  line-height: 2.5rem;
+  font-size: 2rem;
+}
+
+h3 {
+  font-weight: 700;
+  line-height: 2rem;
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-weight: 500;
+  line-height: 1.75rem;
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-weight: 500;
+  line-height: 1.25rem;
+  font-size: 1rem;
+}
+
+h6 {
+  font-weight: 400;
+  line-height: 1rem;
+  font-size: 0.75rem;
+  color: #85858D;
+}
+
+p {
+  color: #404049;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+}
+p.hint {
+  color: #85858D;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+}
+p.success {
+  color: #14D81C;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+}
+p.error {
+  color: #EA1919;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+}
+
+button {
+  color: #FFF;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+button.category {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+input,
+textarea {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #85858D;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #85858D;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+}/*# sourceMappingURL=general-styles.css.map */
