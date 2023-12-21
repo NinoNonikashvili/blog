@@ -7,6 +7,10 @@
         url(../fonts/FiraGO-Regular.woff2) format('woff2'),
 }
 
+body {
+    box-sizing: border-box;
+}
+
 h1,
 h2,
 h3,
@@ -134,6 +138,41 @@ button {
         justify-content: space-between;
         gap: 0.25rem;
     }
+
+    &.link {
+        cursor: pointer;
+
+        &:hover {
+            color: #bb37f3;
+            font-size: 0.9rem;
+            transition: 0.4s;
+
+            svg {
+                g {
+                    path {
+                        fill: #bb37f3;
+                    }
+                }
+            }
+        }
+    }
+
+    &.round {
+        border-radius: 50%;
+        background-color: #fff;
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--active {
+            background-color: #5D37F3;
+        }
+
+        &--inactive {
+            background-color: #E4E3EB;
+        }
+    }
 }
 
 label {
@@ -158,8 +197,8 @@ textarea {
 }
 
 .card {
-    width: 25.5rem;
-    display: flex;
+    width: 25.5rem !important;
+    display: flex !important;
     flex-direction: column;
     align-items: start;
     gap: 1rem;
@@ -177,5 +216,23 @@ textarea {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+    }
+
+    &--single {
+        width: 45rem !important;
+        gap: 1.5rem;
+        margin: 0 auto;
+
+        &>img {
+            margin-bottom: 1rem;
+        }
+
+        &>button {
+            display: none;
+        }
+
+        &>div:nth-of-type(2) {
+            margin-bottom: 1rem;
+        }
     }
 }

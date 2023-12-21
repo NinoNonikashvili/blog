@@ -5,6 +5,11 @@ import $ from 'jquery';
 import logo_img from './assets/imgs/logo.png';
 import banner_img from './assets/imgs/blog-banner.png';
 import arrow_img from './assets/imgs/Arrow.svg';
+import chevron_left_solid_img from './assets/imgs/chevron-left-solid.svg';
+import Swiper from 'swiper/bundle';
+
+// import styles bundle
+import 'swiper/css/bundle';
 
 //default states
 
@@ -20,7 +25,7 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
 
 
 $('#addPost').hide();
-
+$('#singlePage').hide();
 
 /* states that has to stay the same after refresh
  * 1.loggedIn
@@ -37,10 +42,17 @@ let displayCategories = (cat, color, bg) => {
   return `<button data-category class="category" style="color: ${color}; background-color: ${bg}">${cat}</button>`
 }
 
-let displayPosts = (post) => {
+//display posts
+
+let displayPosts = (post, single = false, swiper_class = '') => {
+  console.log(post)
 
   //format date + check if date is valid
   let date = convertToCustomFormat(post.publish_date, 'DD.MM.YYYY');
+  //add email to date if present
+  if(post?.email){
+    date += ' • ' + post.email;
+  }
   let categoryBtns = '';
   let categoryDataAttr = '';
   post.categories.forEach(function(cat, index){
@@ -58,26 +70,36 @@ console.log('post data category atttrs: ' +categoryDataAttr);
 
 
   return `
-        <div class="card" data-post data-categories=${categoryDataAttr}>
+        <div class="card ${single ? 'card--single' : ''} ${swiper_class ? swiper_class : ''}" data-post data-categories=${categoryDataAttr}>
             <img class="card__img" src="${post.image}" alt="post image">
             <div class="card__details">
                 <h5 class="card__details__author">${post.author}</h5>
                 <h6 class="card__details__date">${date}</h6>
-            </div>
-
-            <h4 class="card__title">${post.title}</h4>
-            <div class="card__categories-wrapper">`
+            </div>` + 
+            `${single ? 
+              `<h3 class="card__title">${post.title}</h3>`
+              :
+              `<h4 class="card__title">${post.title}</h4>`
+            }`
+            
+            +`<div class="card__categories-wrapper">`
                 + categoryBtns +
             `</div>
             <p class="card__excerpt">${post.description}</p>
-            <button data-card-btn data-id=${post.id} class="outline">
+            <button data-card-btn data-id=${post.id} class="outline link">
                 <span>სრულად ნახვა</span>
-                <img src="./imgs/Arrow.svg" alt="">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="Arrow">
+                  <path id="Arrow 1" d="M5.93413 13.0052C5.64124 13.2981 5.64124 13.773 5.93413 14.0659C6.22703 14.3587 6.7019 14.3587 6.99479 14.0659L5.93413 13.0052ZM14.2855 6.46446C14.2855 6.05024 13.9497 5.71445 13.5355 5.71446L6.78553 5.71445C6.37132 5.71445 6.03553 6.05024 6.03553 6.46445C6.03553 6.87867 6.37132 7.21445 6.78553 7.21445H12.7855V13.2145C12.7855 13.6287 13.1213 13.9645 13.5355 13.9645C13.9497 13.9645 14.2855 13.6287 14.2855 13.2145L14.2855 6.46446ZM6.99479 14.0659L14.0659 6.99478L13.0052 5.93412L5.93413 13.0052L6.99479 14.0659Z" fill="#5D37F3"/>
+                  </g>
+                </svg>
             </button>
         </div>
   
   `
 }
+
+//apply custom format to date
 
 const convertToCustomFormat = (isoDate, customFormat) =>{
   const dateObject = new Date(isoDate);
@@ -120,7 +142,7 @@ fetch(categoriesUrl, {
     //add click listeners on categories
 
     $('[data-category]').each(function(){
-5
+
       $(this).on('click', function(){
         console.log('clicked')
         let btn = $(this);
@@ -191,6 +213,7 @@ fetch(categoriesUrl, {
   .then(data => {
     console.log(data);
     //display posts
+    let posts = data.data;
     $('#postsWrapper').empty();
     data.data.forEach(post => {
       $('#postsWrapper').append(
@@ -198,14 +221,108 @@ fetch(categoriesUrl, {
       )
     })
     
-
-
     //update flag
     postsDisplayed = true;
+
+    //add click listener to posts' btns to open single post page
+    $('[data-card-btn').each(function(){
+      let btn = $(this);
+      btn.on('click', function(){
+        let id = btn.data("id");
+
+        //hide main page and show single page
+        $('#displayPage').hide();
+        $('#singlePage').show();
+        $('#backToMainPage').on('click', function(){
+          $('#displayPage').show();
+        $('#singlePage').hide();
+        })
+        //load individual post and display
+        
+        
+        let categories = [];
+
+        fetch(getPostsUrl+'/'+id, {
+          headers: {
+              'Authorization': token,
+              'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          
+
+          //display posts
+            $('#singlePagePostWrapper').append(
+              displayPosts(data, true)
+            )
+          //select similar posts and display in slider
+          data.categories.forEach(cat => {
+            categories.push(cat.title)
+          })
+
+          console.log('categories of post: ' + categories)
+
+          let flag = false;
+          let similar_posts =[];
+
+          posts.forEach(post => {
+              console.log('iteration start: ')
+              flag = false;
+              if(post.id !== data.id){
+                  post.categories.forEach(cat =>{
+                      console.log(cat.title, categories, categories.includes(cat.title))
+                      if(categories.includes(cat.title)){
+                          flag = true;
+                      }
+                  })
+                  if(flag){
+                    similar_posts.push(post);
+        
+                  }
+              }
+                    console.log('iteration end. ')
+        
+              
+          })
+        
+        
+        console.log(similar_posts);
+
+        //add similar posts to slider
+
+        var swiper = new Swiper(".mySwiper", {
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        });
+
+        similar_posts.forEach(post => {
+          $('#postSwiper').append(
+            displayPosts(post, false, 'swiper-slide')
+          )
+        })
+      
+      
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+      })
+    })
+
   })
   .catch(error => {
     console.error('Error:', error);
   });
+
 
 
 
