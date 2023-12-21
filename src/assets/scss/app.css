@@ -1,1 +1,39 @@
-/*# sourceMappingURL=app.css.map */
+.display-page {
+  background-color: #F3F2FA;
+  margin: 0;
+  padding: 0;
+}
+.display-page__header {
+  background-color: #fff;
+  padding: 1.25rem 4.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+.display-page__main {
+  padding: 4rem 4.75rem;
+}
+.display-page__main__banner {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+}
+.display-page__main__banner h1 {
+  margin-left: 0.8125rem;
+}
+.display-page__main__banner img {
+  max-width: 624px;
+}
+.display-page__main__content__categories {
+  width: -moz-fit-content;
+  width: fit-content;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+.display-page__main__content__posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}/*# sourceMappingURL=app.css.map */

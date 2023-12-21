@@ -105,11 +105,31 @@ button {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #5D37F3;
+  padding: 0.625rem 1.25rem;
 }
 button.category {
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1rem;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 1.875rem;
+}
+button.category.selected {
+  border: 1px solid #000;
+}
+button.outline {
+  background-color: transparent;
+  color: #5D37F3;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
 }
 
 label {
@@ -138,4 +158,25 @@ textarea::placeholder {
   font-style: normal;
   font-weight: 400;
   line-height: 1.25rem;
+}
+
+.card {
+  width: 25.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+}
+.card__img {
+  width: 100%;
+  height: 20.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }/*# sourceMappingURL=general-styles.css.map */

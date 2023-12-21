@@ -1,0 +1,48 @@
+.display-page {
+    background-color: #F3F2FA;
+    margin: 0;
+    padding: 0;
+
+    &__header {
+        background-color: #fff;
+        padding: 1.25rem 4.75rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__main {
+        padding: 4rem 4.75rem;
+
+        &__banner {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+
+            h1 {
+                margin-left: 0.8125rem;
+            }
+
+            img {
+                max-width: 624px;
+            }
+
+        }
+
+        &__content {
+            &__categories {
+                width: fit-content;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-bottom: 4rem;
+            }
+
+            &__posts {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+        }
+    }
+}
