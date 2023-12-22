@@ -197,8 +197,8 @@ textarea {
 }
 
 .card {
-    width: 25.5rem !important;
-    display: flex !important;
+    width: 25.5rem;
+    display: flex;
     flex-direction: column;
     align-items: start;
     gap: 1rem;
@@ -212,14 +212,21 @@ textarea {
 
     }
 
+
     &__details {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
     }
 
+    &__categories-wrapper {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
     &--single {
-        width: 45rem !important;
+        width: 45rem;
         gap: 1.5rem;
         margin: 0 auto;
 
@@ -235,4 +242,60 @@ textarea {
             margin-bottom: 1rem;
         }
     }
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    margin: 6.25rem 0 9.375rem;
+
+    &#postsSwiper {
+        padding: 5rem 0;
+    }
+
+
+
+    &__posts-wraper {
+
+        &__post.swiper-slide {
+            width: 25.5rem;
+            display: flex;
+        }
+    }
+
+    &__header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+
+            .post-swiper-button-next.swiper-button-disabled,
+            .post-swiper-button-prev.swiper-button-disabled {
+                button {
+                    background-color: #E4E3EB;
+                }
+            }
+
+            .post-swiper-button-next,
+            .post-swiper-button-prev {
+                button {
+                    background-color: #5D37F3;
+                }
+
+            }
+
+        }
+    }
+
+
+
 }

@@ -13,6 +13,8 @@ import 'swiper/css/bundle';
 
 //default states
 
+$(function() {
+
 let loggedIn = false;
 let selectedCategories = [];
 let postsDisplayed = false;
@@ -44,7 +46,7 @@ let displayCategories = (cat, color, bg) => {
 
 //display posts
 
-let displayPosts = (post, single = false, swiper_class = '') => {
+let displayPosts = (post, single = false, swiper_class = '', timeoutId = false) => {
   console.log(post)
 
   //format date + check if date is valid
@@ -67,7 +69,10 @@ let displayPosts = (post, single = false, swiper_class = '') => {
   categoryDataAttr = categoryDataAttr.replace(/\s/g, "");
 
 console.log('post data category atttrs: ' +categoryDataAttr);
-
+console.log('timeoutId: ' + timeoutId);
+if(timeoutId){
+  clearTimeout(timeoutId);
+}
 
   return `
         <div class="card ${single ? 'card--single' : ''} ${swiper_class ? swiper_class : ''}" data-post data-categories=${categoryDataAttr}>
@@ -85,7 +90,7 @@ console.log('post data category atttrs: ' +categoryDataAttr);
             +`<div class="card__categories-wrapper">`
                 + categoryBtns +
             `</div>
-            <p class="card__excerpt">${post.description}</p>
+            <p class="card__excerpt">${single? post.description :  post.description.slice(0, 86)+'...'}</p>
             <button data-card-btn data-id=${post.id} class="outline link">
                 <span>სრულად ნახვა</span>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,14 +119,37 @@ const convertToCustomFormat = (isoDate, customFormat) =>{
   return formattedDate;
 }
 
+//check publish date
+
+const isDatePastOrPresent = (date, timeZone)=>{
+  let options = {
+  timeZone: timeZone,
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+},
+formatter = new Intl.DateTimeFormat([], options);
+let today = formatter.format(new Date());
+let todayObj = new Date(today);
+let dateObj = new Date(date);
+   if(dateObj - todayObj <= 0){
+    console.log('display now')
+      return true
+  }else{
+    console.log('schedule ')
+
+      return dateObj - todayObj
+  }
+}
+
 //load categories 
 
 
 fetch(categoriesUrl, {
-    headers: {
-        'Authorization': 'Bearer 484a705d288bb545f53698f01145d328fc253d7b4ed48d5ce13de3590ed057a4',
-        'Content-Type': 'application/json'
-    }
+    // headers: {
+    //     'Authorization': 'Bearer 484a705d288bb545f53698f01145d328fc253d7b4ed48d5ce13de3590ed057a4',
+    //     'Content-Type': 'application/json'
+    // }
   })
   .then(response => {
     if (!response.ok) {
@@ -163,19 +191,25 @@ fetch(categoriesUrl, {
 
           }
           console.log('posts displayed, go on filtering. ' + postsDisplayed);
-          console.log(selectedCategories);
+          
           $('[data-post]').each(function(){
+            console.log('clicked btn')
+            console.log("1. selected categories: "+selectedCategories);
+            console.log('2.post to check: ')
+            console.log($(this))
             let post = $(this);
             let display = false;
             if(selectedCategories.length === 0) {
               post.show();
             }else{
               selectedCategories.forEach(cat => {
-                console.log(post.data("categories"));
+                console.log('3.post categories '+post.data("categories"));
+                console.log('4. has post any of those categories? '+post.data("categories").includes(cat.replace(/\s/g, "")))
                 if(post.data("categories").includes(cat.replace(/\s/g, ""))){
                     display = true;
                   }
                 })
+                console.log('display: '+ display)
               display ? post.show() : post.hide();
             }
             
@@ -216,9 +250,25 @@ fetch(categoriesUrl, {
     let posts = data.data;
     $('#postsWrapper').empty();
     data.data.forEach(post => {
-      $('#postsWrapper').append(
-        displayPosts(post)
-      )
+      let checkDate = isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
+      console.log('checked date is true '+checkDate)
+      if(checkDate === true){
+        $('#postsWrapper').append(
+        
+          displayPosts(post)
+        ) 
+      }else{
+        console.log('implement schedule')
+        let appendPost = (id) =>{
+          $('#postsWrapper').append(
+        
+            displayPosts(post, false, '', id)
+          )
+        }
+        let id = setTimeout(appendPost, checkDate, id)
+        console.log(id);
+      }
+      
     })
     
     //update flag
@@ -296,17 +346,36 @@ fetch(categoriesUrl, {
 
         //add similar posts to slider
 
-        var swiper = new Swiper(".mySwiper", {
+
+        var swiper = new Swiper("#postsSwiper", {
+          slidesPerView: 3,
+          spaceBetween: 30,
           navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
+            nextEl: "#swiperNextBtn",
+            prevEl: "#swiperPrevBtn",
           },
         });
 
         similar_posts.forEach(post => {
-          $('#postSwiper').append(
-            displayPosts(post, false, 'swiper-slide')
-          )
+          let checkDate = isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
+          if(checkDate === true){
+            $('#postSwiperWrapper').append(
+        
+              displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
+            )
+          }else{
+            console.log('implement schedule')
+            let appendPost = (id) =>{
+              $('#postSwiperWrapper').append(
+        
+                displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
+              )
+            }
+            let id = setTimeout(appendPost, checkDate, id)
+            console.log(id);
+          }
+          
+
         })
       
       
@@ -441,3 +510,5 @@ fetch(categoriesUrl, {
   
   
 //   console.log(similar_posts);
+
+});
