@@ -2,7 +2,6 @@ export default class Validation{
 
     valIsEmailValid = false;
 
-    valIsPhoneValid = false;
 
     
 
@@ -10,7 +9,7 @@ export default class Validation{
         //btn is passed
         
         let isEmpty = text.length===0;
-        let regex = /@redberry\.ge$/;
+        let regex = /.+@redberry\.ge$/;
         let isWrong = !regex.test(text);
 
         if(isEmpty){
@@ -26,44 +25,66 @@ export default class Validation{
     applyEmailStyles(elem, state){
 
         //btn is passed
+        console.log('update styles')
   
         switch(state) {
             case "empty":
+                console.log("case1")
+                elem.removeClass('input--success');
                 elem.addClass('input--error');
                 elem.siblings('.hint--icon-empty').show();
                 elem.siblings('.hint--icon-wrong').hide();
                 elem.siblings('.hint--icon-none').hide();
                 break;
             case "invalid":
+                console.log("case2")
+
+                elem.removeClass('input--success');
                 elem.addClass('input--error');
                 elem.siblings('.hint--icon-empty').hide();
                 elem.siblings('.hint--icon-wrong').show();
                 elem.siblings('.hint--icon-none').hide();
                 break;
             case "none":
-                inputElem.addClass('input--error');
+                console.log("case3")
+
+                elem.removeClass('input--success');
+                elem.addClass('input--error');
                 elem.siblings('.hint--icon-empty').hide();
                 elem.siblings('.hint--icon-wrong').hide();
                 elem.siblings('.hint--icon-none').show();
                 break;
             case "valid":
+                console.log("case4")
+
+                elem.removeClass('input--error');
                 elem.addClass('input--success');
                 elem.siblings('.hint--icon-empty').hide();
                 elem.siblings('.hint--icon-wrong').hide();
                 elem.siblings('.hint--icon-none').hide();
                 break;
             default:
+                console.log("case5")
+
+                elem.removeClass('input--success');
+                elem.removeClass('input--error');
+                elem.siblings('.hint--icon-empty').hide();
+                elem.siblings('.hint--icon-wrong').hide();
+                elem.siblings('.hint--icon-none').hide();
                 
         }
     }
 
 
+
     setFinalStatus(elem) {
-        let formStatus = this.valIsPhoneValid && this.valIsTextValid
+        let formStatus = this.valIsTextValid;
         if(formStatus){
-            elem.prop('disabled', false)
+            elem.prop('disabled', false);
+            elem.removeClass('disabled');
           }else{
-            elem.prop('disabled', true)
+            elem.prop('disabled', true);
+            elem.addClass('disabled');
           } 
 
         // return this.valIsPhoneValid && this.valIsTextValid;

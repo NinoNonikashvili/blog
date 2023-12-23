@@ -1,7 +1,7 @@
 import './assets/scss/general-styles.scss';
 import './assets/scss/general-styles.scss';
 import './assets/scss/app.scss';
-import $ from 'jquery';
+import $, { event } from 'jquery';
 import logo_img from './assets/imgs/logo.png';
 import banner_img from './assets/imgs/blog-banner.png';
 import arrow_img from './assets/imgs/Arrow.svg';
@@ -25,6 +25,7 @@ let posts  = [];
 const baseUrl = 'https://api.blog.redberryinternship.ge/api';
 const categoriesUrl = baseUrl+'/categories';
 const getPostsUrl = baseUrl + '/blogs';
+const loginUrl = baseUrl + '/login';
 const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee27a59f';
 
 
@@ -151,10 +152,10 @@ let dateObj = new Date(date);
 
 
   fetch(categoriesUrl, {
-    // headers: {
-    //     'Authorization': 'Bearer 484a705d288bb545f53698f01145d328fc253d7b4ed48d5ce13de3590ed057a4',
-    //     'Content-Type': 'application/json'
-    // }
+    headers: {
+        'Authorization': token,
+        'Content-Type': 'application/json'
+    }
   })
   .then(response => {
     if (!response.ok) {
@@ -492,6 +493,10 @@ $('[data-card-btn').each(function(){
 
 //authorization
 
+// $('#authorizationForm').on('submit', function(event){
+//   event.preventDefault()
+// })
+
 $('#login').on('click', function(){
   $('#mainContent').addClass('bg-shadow');
   $('#authorizationPopup').show();
@@ -500,29 +505,99 @@ $('#login').on('click', function(){
   $('.hint--icon-empty').hide();
   $('.hint--icon-wrong').hide();
   $('.hint--icon-none').hide();
+  $('#authSubmit').addClass('disabled');
+  $('#authSubmit').prop('disabled', true);
+
+    //initialize validator object
+    const authEmailValidation = new Validation();
 
   $('#closeAuthPopup').on('click', function(){
+
+    //add default styles to popup
+    $("#popUpSuccess").hide();
+    $('#popUpCheck').show();
+    $("#authEmail").val('');
+    authEmailValidation.applyEmailStyles($('#authEmail'));
+    
+    //hide popup
     $('#mainContent').removeClass('bg-shadow');
     $('#authorizationPopup').hide();
+
   })
 
-  //initialize validator object
-  const authEmailValidation = new Validation();
 
-  $('#authSubmit').on('click', function(){
-    event.preventDefault()
-    let btn = $(this);
-    let inputElem = btn.siblings("div").children("input");
+
+  $('#authEmail').on('input', function(){
+    let email = $(this);
     //if input is not correct add error message and apply styles
-    authEmailValidation.isEmailValid(inputElem, inputElem.val())
+    authEmailValidation.isEmailValid(email, email.val());
+    let submitBtn = $('#authSubmit');
+    authEmailValidation.setFinalStatus(submitBtn);
     console.log('applied styles')
+  });
 
-    //else send request
+
+  //only clickable when input is correct
+  $('#authSubmit').on('click', function(){
+
+    //send request to check email
+    let email = $('#authEmail').val();
+    let data = {
+      "email": email
+    }
+
+    console.log(data)
+    fetch(loginUrl, {
+      method: 'POST',
+      headers: {
+          'Authorization': token,
+          'Content-Type': 'application/json',
+          'accept': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.log(response.status + ' from error')
+        if(response.status === 422) {
+          authEmailValidation.applyEmailStyles($('#authEmail'), 'none');
+        }
+        throw new Error('Network response was not ok EERORRRRRR');
+      }
+      $('#popUpCheck').hide();
+      $('#popUpSuccess').show();
+      $('#login').hide();
+      $('#addPost').show();
+      $('#authSuccessBtn').on('click', function(){
+        //add default styles to popup
+        $("#popUpSuccess").hide();
+        $('#popUpCheck').show();
+        $("#authEmail").val('');
+        authEmailValidation.applyEmailStyles($('#authEmail'));
+        
+        //hide popup
+        $('#mainContent').removeClass('bg-shadow');
+        $('#authorizationPopup').hide();
+      })
+      console.log(response.status + ' from success')
+      return response.json();
+    })
+    .then(data => {
+  
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+    
+  })
+
 
     //if not such user add error message and apply styles
 
     //else update loggedin var, display success popup content, display  addblog btn.
-  })
+
+
+
 
   //check email
 
@@ -530,6 +605,8 @@ $('#login').on('click', function(){
 
 
 })
+
+
 
 
 

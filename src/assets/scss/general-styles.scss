@@ -181,6 +181,11 @@ button {
             height: 4rem;
         }
     }
+
+    &.disabled {
+        background-color: #E4E3EB;
+        color: #fff;
+    }
 }
 
 label {
@@ -202,6 +207,8 @@ textarea {
         font-weight: 400;
         line-height: 1.25rem;
     }
+
+
 }
 
 .card {
@@ -362,7 +369,7 @@ textarea {
     }
 }
 
-form {
+.form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -378,21 +385,31 @@ form {
             padding: 0.75rem 1rem;
             border-radius: 0.75rem;
             border: 0.0625rem solid #E4E3EB;
-            background: #FCFCFD;
+            background-color: #FCFCFD;
 
             &:focus {
                 border: 1.5px solid #5D37F3;
-                background: #F7F7FF;
+                background-color: #F7F7FF;
             }
 
             &--success {
                 border: 1px solid #14D81C;
-                background: #F8FFF8;
+                background-color: #F8FFF8;
+
+                &:focus {
+                    border: 1px solid #14D81C;
+                    background-color: #F8FFF8;
+                }
             }
 
             &--error {
                 border: 1px solid #EA1919;
-                background: #FAF2F3;
+                background-color: #FAF2F3;
+
+                &:focus {
+                    border: 1px solid #EA1919;
+                    background-color: #FAF2F3;
+                }
             }
         }
 
@@ -403,6 +420,9 @@ form {
         font-size: 0.75rem;
         font-weight: 400;
         line-height: 1.25rem;
+        display: flex;
+        gap: 1rem;
+
 
         &--error {
             color: #EA1919;

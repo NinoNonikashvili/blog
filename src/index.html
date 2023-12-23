@@ -93,11 +93,11 @@
         </svg>
         <div class="popup__check" id="popUpCheck">
             <h3>შესვლა</h3>
-            <form id="authorizationForm">
+            <div id="authorizationForm" class="form">
                 <div class="input-div email">
                     <label for="authorization-email">ელ-ფოსტა</label>
                     <input class="input" placeholder="Example@redberry.ge" name="authorization-email" id="authEmail">
-                    <p class="hint--icon-empty" id="authEmailEmpty">
+                    <p class="hint--icon-empty hint--icon-error" id="authEmailEmpty">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="vuesax/linear/info-circle">
                                 <g id="info-circle">
@@ -113,7 +113,7 @@
                         </svg>
                         <span>ელ-ფოსტა ცარიელია</span>
                     </p>
-                    <p class="hint--icon-wrong" id="authEmailWrong">
+                    <p class="hint--icon-wrong hint--icon-error" id="authEmailWrong">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="vuesax/linear/info-circle">
                                 <g id="info-circle">
@@ -127,9 +127,9 @@
                                 </g>
                             </g>
                         </svg>
-                        <span>ელ-ფოსტის ფორმატი არასწორია</span>
+                        <span>მეილი უნდა მთავრდებოდეს @redberry.ge-ით</span>
                     </p>
-                    <p class="hint--icon-none" id="authEmailNone">
+                    <p class="hint--icon-none hint--icon-error" id="authEmailNone">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="vuesax/linear/info-circle">
                                 <g id="info-circle">
@@ -148,7 +148,7 @@
                 </div>
 
                 <button id="authSubmit">შესვლა</button>
-            </form>
+            </div>
         </div>
         <div class="popup__success" id="popUpSuccess">
             <button class="round round--green">
@@ -159,11 +159,15 @@
                 </svg>
             </button>
             <h4>წარმატებული ავტორიზაცია</h4>
-            <button>კარგი</button>
+            <button id="authSuccessBtn">კარგი</button>
         </div>
 
 
     </div>
+    <label for="img" class="imgLabel">
+        this is img uploader
+        <input type="file" name="image" id="img">
+    </label>
 </body>
 
 </html>
