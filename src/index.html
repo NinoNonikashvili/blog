@@ -4,73 +4,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./app.js" defer></script>
+
     <title>Blog</title>
 </head>
 
 <body class="display-page">
-    <header class="display-page__header">
-        <img src="./imgs/logo.png" alt="redberry logo">
-        <button id="login"> შესვლა</button>
-        <button id="addPost"> დაამატე პოსტი</button>
+    <div id="mainContent">
+        <header class="display-page__header">
+            <img src="./imgs/logo.png" alt="redberry logo">
+            <button id="login"> შესვლა</button>
+            <button id="addPost"> დაამატე პოსტი</button>
 
-    </header>
-    <section id="displayPage" class="display-page__main">
-        <section class="display-page__main__banner">
-            <h1>ბლოგი</h1>
-            <img src="./imgs/blog-banner.png" alt="fantazy planet image">
-        </section>
-        <section class="display-page__main__content">
-            <div id="catWrapper" class="display-page__main__content__categories"></div>
-            <div id="postsWrapper" class="display-page__main__content__posts"></div>
-        </section>
-    </section>
-    <section id="singlePage" class="single-page">
-        <section id="singlePagePostWrapper" class="single-page__post-wrapper">
-            <button id="backToMainPage" class="round">
-                <svg xmlns="http://www.w3.org/2000/svg" height="18" width="12"
-                    viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
-                    <path opacity="1" fill="#1E3050"
-                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
-                </svg>
-            </button>
-        </section>
-        <section class="single-page__slider">
-            <!-- Swiper -->
-            <div class="swiper" id="postsSwiper">
+        </header>
+        <section id="displayPage" class="display-page__main">
+            <section class="display-page__main__banner">
+                <h1>ბლოგი</h1>
+                <img src="./imgs/blog-banner.png" alt="fantazy planet image">
+            </section>
+            <section class="display-page__main__content">
+                <div id="catWrapper" class="display-page__main__content__categories"></div>
+                <div id="postsWrapper" class="display-page__main__content__posts"></div>
 
-                <div id="postSwiperWrapper" class="swiper__posts-wraper swiper-wrapper">
+            </section>
+        </section>
+        <section id="singlePage" class="single-page">
+            <section id="singlePagePostWrapper" class="single-page__post-wrapper">
+                <button id="backToMainPage" class="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18" width="12" viewBox="0 0 320 512">
+                        <path opacity="1" fill="#1E3050"
+                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                    </svg>
+                </button>
+                <div id="singlePost"></div>
+            </section>
+            <section class="single-page__slider">
+                <div class="swiper" id="postsSwiper">
 
-                </div>
-                <div class="swiper__header">
-                    <h3>მსგავსი სტატიები</h3>
-                    <div>
-                        <div id="swiperPrevBtn" class="post-swiper-button-prev">
-                            <button class="round">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="18" width="12"
-                                    viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
-                                    <path opacity="1" fill="#fff"
-                                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
-                                </svg>
-                            </button>
+                    <div id="postSwiperWrapper" class="swiper__posts-wraper swiper-wrapper">
+
+                    </div>
+                    <div class="swiper__header">
+                        <h2>მსგავსი სტატიები</h2>
+                        <div>
+                            <div id="swiperPrevBtn" class="post-swiper-button-prev">
+                                <button class="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="18" width="12"
+                                        viewBox="0 0 320 512">
+                                        <path opacity="1" fill="#fff"
+                                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="swiperNextBtn" class="post-swiper-button-next">
+                                <button class="round ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="18" width="12"
+                                        viewBox="0 0 320 512">
+                                        <path opacity="1" fill="#fff"
+                                            d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+                                    </svg>
+                                </button>
+                            </div>
+
+
                         </div>
-                        <div id="swiperNextBtn" class="post-swiper-button-next">
-                            <button class="round ">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="18" width="12"
-                                    viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
-                                    <path opacity="1" fill="#fff"
-                                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
-                                </svg>
-                            </button>
-                        </div>
-
 
                     </div>
 
                 </div>
-
-            </div>
+            </section>
         </section>
-    </section>
+    </div>
+
+
+    <div id="authorizationPopup" class="popup">
+        <svg id="closeAuthPopup" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <g id="vuesax/linear/add">
+                <g id="vuesax/linear/add_2">
+                    <g id="add">
+                        <path id="Vector" d="M7.75732 16.2426L16.2426 7.75736" stroke="#1A1A1F" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path id="Vector_2" d="M16.2426 16.2426L7.75732 7.75736" stroke="#1A1A1F" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+        <div class="popup__check" id="popUpCheck">
+            <h3>შესვლა</h3>
+            <form id="authorizationForm">
+                <div class="input-div email">
+                    <label for="authorization-email">ელ-ფოსტა</label>
+                    <input class="input" placeholder="Example@redberry.ge" name="authorization-email" id="authEmail">
+                    <p class="hint--icon-empty" id="authEmailEmpty">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="vuesax/linear/info-circle">
+                                <g id="info-circle">
+                                    <path id="Vector"
+                                        d="M10.0002 1.66666C5.41683 1.66666 1.66683 5.41666 1.66683 10C1.66683 14.5833 5.41683 18.3333 10.0002 18.3333C14.5835 18.3333 18.3335 14.5833 18.3335 10C18.3335 5.41666 14.5835 1.66666 10.0002 1.66666Z"
+                                        fill="#EA1919" />
+                                    <path id="Vector_2" d="M10 13.3333L10 9.16666" stroke="white" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path id="Vector_3" d="M10.0044 6.66667L9.99691 6.66667" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+                            </g>
+                        </svg>
+                        <span>ელ-ფოსტა ცარიელია</span>
+                    </p>
+                    <p class="hint--icon-wrong" id="authEmailWrong">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="vuesax/linear/info-circle">
+                                <g id="info-circle">
+                                    <path id="Vector"
+                                        d="M10.0002 1.66666C5.41683 1.66666 1.66683 5.41666 1.66683 10C1.66683 14.5833 5.41683 18.3333 10.0002 18.3333C14.5835 18.3333 18.3335 14.5833 18.3335 10C18.3335 5.41666 14.5835 1.66666 10.0002 1.66666Z"
+                                        fill="#EA1919" />
+                                    <path id="Vector_2" d="M10 13.3333L10 9.16666" stroke="white" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path id="Vector_3" d="M10.0044 6.66667L9.99691 6.66667" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+                            </g>
+                        </svg>
+                        <span>ელ-ფოსტის ფორმატი არასწორია</span>
+                    </p>
+                    <p class="hint--icon-none" id="authEmailNone">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="vuesax/linear/info-circle">
+                                <g id="info-circle">
+                                    <path id="Vector"
+                                        d="M10.0002 1.66666C5.41683 1.66666 1.66683 5.41666 1.66683 10C1.66683 14.5833 5.41683 18.3333 10.0002 18.3333C14.5835 18.3333 18.3335 14.5833 18.3335 10C18.3335 5.41666 14.5835 1.66666 10.0002 1.66666Z"
+                                        fill="#EA1919" />
+                                    <path id="Vector_2" d="M10 13.3333L10 9.16666" stroke="white" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path id="Vector_3" d="M10.0044 6.66667L9.99691 6.66667" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </g>
+                            </g>
+                        </svg>
+                        <span>ელ-ფოსტა არ მოიძებნა</span>
+                    </p>
+                </div>
+
+                <button id="authSubmit">შესვლა</button>
+            </form>
+        </div>
+        <div class="popup__success" id="popUpSuccess">
+            <button class="round round--green">
+                <svg xmlns="http://www.w3.org/2000/svg" height="22" width="18"
+                    viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                    <path opacity="1" fill="#fff"
+                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                </svg>
+            </button>
+            <h4>წარმატებული ავტორიზაცია</h4>
+            <button>კარგი</button>
+        </div>
+
+
+    </div>
 </body>
 
 </html>

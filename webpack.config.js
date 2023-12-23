@@ -5,15 +5,20 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: './src/app.js',
+    entry: {
+      app: './src/app.js',
+    },
     output: {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+      new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
+    
+       
         }),
-      //  new CleanWebpackPlugin()
+
       
     ],
     module: {

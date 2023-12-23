@@ -7,6 +7,8 @@ import banner_img from './assets/imgs/blog-banner.png';
 import arrow_img from './assets/imgs/Arrow.svg';
 import chevron_left_solid_img from './assets/imgs/chevron-left-solid.svg';
 import Swiper from 'swiper/bundle';
+import Validation from './assets/js/validations';
+
 
 // import styles bundle
 import 'swiper/css/bundle';
@@ -18,6 +20,7 @@ $(function() {
 let loggedIn = false;
 let selectedCategories = [];
 let postsDisplayed = false;
+let posts  = [];
 
 const baseUrl = 'https://api.blog.redberryinternship.ge/api';
 const categoriesUrl = baseUrl+'/categories';
@@ -28,6 +31,8 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
 
 $('#addPost').hide();
 $('#singlePage').hide();
+$('#authorizationPopup').hide();
+
 
 /* states that has to stay the same after refresh
  * 1.loggedIn
@@ -82,7 +87,7 @@ if(timeoutId){
                 <h6 class="card__details__date">${date}</h6>
             </div>` + 
             `${single ? 
-              `<h3 class="card__title">${post.title}</h3>`
+              `<h2 class="card__title">${post.title}</h2>`
               :
               `<h4 class="card__title">${post.title}</h4>`
             }`
@@ -145,7 +150,7 @@ let dateObj = new Date(date);
 //load categories 
 
 
-fetch(categoriesUrl, {
+  fetch(categoriesUrl, {
     // headers: {
     //     'Authorization': 'Bearer 484a705d288bb545f53698f01145d328fc253d7b4ed48d5ce13de3590ed057a4',
     //     'Content-Type': 'application/json'
@@ -247,7 +252,7 @@ fetch(categoriesUrl, {
   .then(data => {
     console.log(data);
     //display posts
-    let posts = data.data;
+    posts = data.data;
     $('#postsWrapper').empty();
     data.data.forEach(post => {
       let checkDate = isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
@@ -265,7 +270,8 @@ fetch(categoriesUrl, {
             displayPosts(post, false, '', id)
           )
         }
-        let id = setTimeout(appendPost, checkDate, id)
+        let id = setTimeout(appendPost, checkDate, id);
+        clearTimeout(id);
         console.log(id);
       }
       
@@ -278,111 +284,17 @@ fetch(categoriesUrl, {
     $('[data-card-btn').each(function(){
       let btn = $(this);
       btn.on('click', function(){
-        let id = btn.data("id");
+        
 
-        //hide main page and show single page
-        $('#displayPage').hide();
-        $('#singlePage').show();
-        $('#backToMainPage').on('click', function(){
-          $('#displayPage').show();
-        $('#singlePage').hide();
-        })
+        // //hide main page and show single page
+
+        showSinglePage();
+
         //load individual post and display
         
+        let id = btn.data("id");
+        fetchSinglePost(id);
         
-        let categories = [];
-
-        fetch(getPostsUrl+'/'+id, {
-          headers: {
-              'Authorization': token,
-              'Content-Type': 'application/json'
-          }
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          
-
-          //display posts
-            $('#singlePagePostWrapper').append(
-              displayPosts(data, true)
-            )
-          //select similar posts and display in slider
-          data.categories.forEach(cat => {
-            categories.push(cat.title)
-          })
-
-          console.log('categories of post: ' + categories)
-
-          let flag = false;
-          let similar_posts =[];
-
-          posts.forEach(post => {
-              console.log('iteration start: ')
-              flag = false;
-              if(post.id !== data.id){
-                  post.categories.forEach(cat =>{
-                      console.log(cat.title, categories, categories.includes(cat.title))
-                      if(categories.includes(cat.title)){
-                          flag = true;
-                      }
-                  })
-                  if(flag){
-                    similar_posts.push(post);
-        
-                  }
-              }
-                    console.log('iteration end. ')
-        
-              
-          })
-        
-        
-        console.log(similar_posts);
-
-        //add similar posts to slider
-
-
-        var swiper = new Swiper("#postsSwiper", {
-          slidesPerView: 3,
-          spaceBetween: 30,
-          navigation: {
-            nextEl: "#swiperNextBtn",
-            prevEl: "#swiperPrevBtn",
-          },
-        });
-
-        similar_posts.forEach(post => {
-          let checkDate = isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
-          if(checkDate === true){
-            $('#postSwiperWrapper').append(
-        
-              displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
-            )
-          }else{
-            console.log('implement schedule')
-            let appendPost = (id) =>{
-              $('#postSwiperWrapper').append(
-        
-                displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
-              )
-            }
-            let id = setTimeout(appendPost, checkDate, id)
-            console.log(id);
-          }
-          
-
-        })
-      
-      
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
 
       })
     })
@@ -396,119 +308,231 @@ fetch(categoriesUrl, {
 
 
 
-//categories matching
 
-// let arr = JSON.stringify({
-//     "data": [
-//       {
-//         "id": 1,
-//         "title": "Blog title",
-//         "description": "Blog description",
-//         "image": "https://via.placeholder.com/150",
-//         "publish_date": "2023-11-19 00:00:00",
-//         "categories": [
-//           {
-//             "id": 1,
-//             "name": "bla",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           },
-//           {
-//             "id": 1,
-//             "name": "blo",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           },
-//           {
-//             "id": 1,
-//             "name": "blu",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           }
-//         ],
-//         "author": "გელა გელაშვილი"
-//       },
-//       {
-//         "id": 2,
-//         "title": "Blog title",
-//         "description": "Blog description",
-//         "image": "https://via.placeholder.com/150",
-//         "publish_date": "2023-11-19 00:00:00",
-//         "categories": [
-//           {
-//             "id": 1,
-//             "name": "marketing",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           },
-//           {
-//             "id": 1,
-//             "name": "ux",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           },
-//           {
-//             "id": 1,
-//             "name": "blu",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           }
-//         ],
-//         "author": "გელა გელაშვილი"
-//       },
-//       {
-//         "id": 3,
-//         "title": "Blog title",
-//         "description": "Blog description",
-//         "image": "https://via.placeholder.com/150",
-//         "publish_date": "2023-11-19 00:00:00",
-//         "categories": [
-//           {
-//             "id": 1,
-//             "name": "ai",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           },
-//           {
-//             "id": 1,
-//             "name": "ux",
-//             "text_color": "#ffffff",
-//             "background_color": "#000000"
-//           }
-//         ],
-//         "author": "გელა გელაშვილი"
-//       }
-//     ]
-//   })
-//   console.log(arr)
-//   arr = JSON.parse(arr);
-//   console.log(arr.data)
-//   let test = ['ui', 'bla', 'ux'];
-//   let similar_posts = [];
-//   let current_id = 2;
-//   let flag = false;
+
+
+const showSinglePage = () => {
+
+  //hide main page and show single page
+  $('#displayPage').hide();
+  $('#singlePage').show();
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+  //add navigation functionality to back button
+  $('#backToMainPage').on('click', function(){
+    $('#displayPage').show();
+    $('#singlePage').hide();
+  })
+
+  //initialize swiper
+
+  var swiper = new Swiper("#postsSwiper", {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    navigation: {
+      nextEl: "#swiperNextBtn",
+      prevEl: "#swiperPrevBtn",
+    },
+  });
+}
+
+const fetchSinglePost = (id) => {
+  fetch(getPostsUrl+'/'+id, {
+    headers: {
+        'Authorization': token,
+        'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
     
-//     arr.data.forEach(post => {
-//         console.log('iteration start: ')
-//         flag = false;
-//         if(post.id !== current_id){
-//             post.categories.forEach(cat =>{
-//                 console.log(cat.name, test, test.includes(cat.name))
-//                 if(test.includes(cat.name)){
-//                     flag = true;
-//                 }
-//             })
-//             if(flag){
-//                similar_posts.push(post);
+
+    //display posts
+    $('#singlePost').empty();
+      $('#singlePost').append(
+        displayPosts(data, true)
+      )
+    //select similar posts and display in slider
+
+    let categories = [];
+    data.categories.forEach(cat => {
+      categories.push(cat.title)
+    })
+    let post_id = data.id;
+    let similar_posts = findSimilarPosts(post_id, posts, categories);
+
+
+    // posts.forEach(post => {
+    //     console.log('iteration start: ')
+    //     flag = false;
+    //     if(post.id !== post_id){
+    //         post.categories.forEach(cat =>{
+    //             console.log(cat.title, categories, categories.includes(cat.title))
+    //             if(categories.includes(cat.title)){
+    //                 flag = true;
+    //             }
+    //         })
+    //         if(flag){
+    //           similar_posts.push(post);
   
-//             }
-//         }
-//               console.log('iteration end. ')
+    //         }
+    //     }
+    //           console.log('iteration end. ')
   
         
-//     })
+    // })
   
   
-//   console.log(similar_posts);
+
+//populate swiper
+  // similar_posts.forEach(post => {
+  //   let checkDate = isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
+  //   if(checkDate === true){
+  //     $('#postSwiperWrapper').append(
+  
+  //       displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
+  //     )
+  //   }else{
+  //     console.log('implement schedule')
+  //     let appendPost = (id) =>{
+  //       $('#postSwiperWrapper').append(
+  
+  //         displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
+  //       )
+  //     }
+  //     let id = setTimeout(appendPost, checkDate, id)
+  //     clearTimeout(id);
+  //     console.log(id);
+  //   }
+    
+
+  // })
+  populateSwiper(similar_posts)
+
+
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+}
+
+const findSimilarPosts = (post_id, posts, categories) => {
+  let flag = false;
+  let similar_posts = [];
+  posts.forEach(post => {
+    console.log('iteration start: ')
+    flag = false;
+    if(post.id !== post_id){
+        post.categories.forEach(cat =>{
+            console.log(cat.title, categories, categories.includes(cat.title))
+            if(categories.includes(cat.title)){
+                flag = true;
+            }
+        })
+        if(flag){
+          similar_posts.push(post);
+
+        }
+    }
+          console.log('iteration end. ')
+
+    
+  })
+  return similar_posts;
+}
+
+const populateSwiper = (similarPosts) => {
+
+  $('#postSwiperWrapper').empty();
+  similarPosts.forEach(post => {
+    let checkDate = isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
+    if(checkDate === true){
+      $('#postSwiperWrapper').append(
+  
+        displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
+      )
+    }else{
+      console.log('implement schedule')
+      let appendPost = (id) =>{
+        $('#postSwiperWrapper').append(
+  
+          displayPosts(post, false, 'swiper__posts-wraper__post swiper-slide')
+        )
+      }
+      let id = setTimeout(appendPost, checkDate, id)
+      clearTimeout(id);
+      console.log(id);
+    }
+    
+
+  })
+//add listener to swiper posts' too
+$('[data-card-btn').each(function(){
+  let btn = $(this);
+  btn.on('click', function(){
+    
+
+    // showSinglePage();
+
+    //load individual post and display
+    let id = btn.data("id");
+    fetchSinglePost(id);
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+
+  })
+})
+
+
+}
+
+//authorization
+
+$('#login').on('click', function(){
+  $('#mainContent').addClass('bg-shadow');
+  $('#authorizationPopup').show();
+  $('#popUpCheck').show();
+  $('#popUpSuccess').hide();
+  $('.hint--icon-empty').hide();
+  $('.hint--icon-wrong').hide();
+  $('.hint--icon-none').hide();
+
+  $('#closeAuthPopup').on('click', function(){
+    $('#mainContent').removeClass('bg-shadow');
+    $('#authorizationPopup').hide();
+  })
+
+  //initialize validator object
+  const authEmailValidation = new Validation();
+
+  $('#authSubmit').on('click', function(){
+    event.preventDefault()
+    let btn = $(this);
+    let inputElem = btn.siblings("div").children("input");
+    //if input is not correct add error message and apply styles
+    authEmailValidation.isEmailValid(inputElem, inputElem.val())
+    console.log('applied styles')
+
+    //else send request
+
+    //if not such user add error message and apply styles
+
+    //else update loggedin var, display success popup content, display  addblog btn.
+  })
+
+  //check email
+
+  //updated popup according to the response
+
+
+})
+
+
+
+
 
 });

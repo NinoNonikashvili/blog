@@ -160,17 +160,22 @@ button.round--active {
 button.round--inactive {
   background-color: #E4E3EB;
 }
+button.round--green {
+  background-color: #14D81C;
+  width: 4rem;
+  height: 4rem;
+}
 
 label {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.25rem;
 }
 
 input,
 textarea {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.25rem;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
@@ -262,4 +267,93 @@ textarea::placeholder {
 .swiper__header div .post-swiper-button-next button,
 .swiper__header div .post-swiper-button-prev button {
   background-color: #5D37F3;
+}
+
+.bg-shadow {
+  opacity: 0.24;
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+}
+
+.popup {
+  width: 30rem;
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 2.5rem 1.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.popup__success, .popup__check {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.popup__success button:last-of-type, .popup__check button:last-of-type {
+  width: 100%;
+}
+.popup__check h3 {
+  margin-bottom: 1.5rem;
+}
+.popup__success h4 {
+  margin: 1rem 0 3rem;
+}
+.popup > svg {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+form .input-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+form .input-div .input {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 0.0625rem solid #E4E3EB;
+  background: #FCFCFD;
+}
+form .input-div .input:focus {
+  border: 1.5px solid #5D37F3;
+  background: #F7F7FF;
+}
+form .input-div .input--success {
+  border: 1px solid #14D81C;
+  background: #F8FFF8;
+}
+form .input-div .input--error {
+  border: 1px solid #EA1919;
+  background: #FAF2F3;
+}
+form .hint {
+  color: #85858D;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+form .hint--error {
+  color: #EA1919;
+}
+form .hint--success {
+  color: #14D81C;
+}
+form .hint--icon-error {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: #EA1919;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
 }/*# sourceMappingURL=general-styles.css.map */
