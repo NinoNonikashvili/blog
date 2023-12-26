@@ -12,7 +12,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
-      new CleanWebpackPlugin(),
+      // new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
             template: 'src/index.html',
     
@@ -48,6 +48,7 @@ module.exports = {
                 },
               },
             ],
+          
       
           },
           {
@@ -55,6 +56,7 @@ module.exports = {
             use:[
               {
                 loader: 'file-loader',
+                // type: "asset",
                 options: {
                   name: '[name].[ext]',
                   outputPath: 'imgs/'
@@ -76,5 +78,8 @@ module.exports = {
         ],
 
       },
+    optimization: {
+        runtimeChunk: 'single'
+    },
 
 }

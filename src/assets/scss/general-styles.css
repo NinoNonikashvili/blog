@@ -2,7 +2,8 @@
   font-family: "firaGo";
   src: url(../fonts/FiraGO-Regular.eot) format("eot"), url(../fonts/FiraGO-Regular.otf) format("otf"), url(../fonts/FiraGO-Regular.ttf) format("ttf"), url(../fonts/FiraGO-Regular.woff) format("woff"), url(../fonts/FiraGO-Regular.woff2) format("woff2");
 }
-body {
+body,
+* {
   box-sizing: border-box;
 }
 
@@ -23,7 +24,6 @@ textarea {
   margin: 0;
   padding: 0;
   text-decoration: none;
-  list-style-type: none;
   font-family: "firaGo";
   font-style: normal;
   color: #1A1A1F;
@@ -164,6 +164,10 @@ button.round--green {
   background-color: #14D81C;
   width: 4rem;
   height: 4rem;
+}
+button.disabled {
+  background-color: #E4E3EB;
+  color: #fff;
 }
 
 label {
@@ -307,49 +311,80 @@ textarea::placeholder {
   right: 1.25rem;
 }
 
-form {
+.form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1.5rem;
   width: 100%;
 }
-form .input-div {
-  width: 100%;
+.form .input-div {
+  width: 48%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
-form .input-div .input {
+.form .input-div--full-length {
+  width: 100%;
+}
+.form .input-div--icon {
+  position: relative;
+}
+.form .input-div input.date {
+  position: relative;
+}
+.form .input-div input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  color: transparent;
+  background: transparent;
+}
+.form .input-div .input {
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   border: 0.0625rem solid #E4E3EB;
-  background: #FCFCFD;
+  background-color: #FCFCFD;
 }
-form .input-div .input:focus {
+.form .input-div .input:focus {
   border: 1.5px solid #5D37F3;
-  background: #F7F7FF;
+  background-color: #F7F7FF;
 }
-form .input-div .input--success {
+.form .input-div .input--success {
   border: 1px solid #14D81C;
-  background: #F8FFF8;
+  background-color: #F8FFF8;
 }
-form .input-div .input--error {
+.form .input-div .input--success:focus {
+  border: 1px solid #14D81C;
+  background-color: #F8FFF8;
+}
+.form .input-div .input--error {
   border: 1px solid #EA1919;
-  background: #FAF2F3;
+  background-color: #FAF2F3;
 }
-form .hint {
+.form .input-div .input--error:focus {
+  border: 1px solid #EA1919;
+  background-color: #FAF2F3;
+}
+.form .input-div > ul {
+  padding-left: 1rem;
+}
+.form .hint {
   color: #85858D;
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.25rem;
 }
-form .hint--error {
+.form .hint--error {
   color: #EA1919;
 }
-form .hint--success {
+.form .hint--success {
   color: #14D81C;
 }
-form .hint--icon-error {
+.form .hint--icon-error {
   display: flex;
   gap: 0.5rem;
   align-items: center;

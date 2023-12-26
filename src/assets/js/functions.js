@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Validation from './validations';
+import * as validations from './validations';
 import Swiper from 'swiper/bundle';
 
 
@@ -31,22 +31,118 @@ import Swiper from 'swiper/bundle';
         
         })
   }
+  const rgbToHex = (rgb) => {
+    // Split the RGB values
+    var rgbArray = rgb.match(/\d+/g);
+    // Convert each value to hexadecimal and concatenate
+    return '#' + rgbArray.map(function (value) {
+      return ('0' + parseInt(value).toString(16)).slice(-2);
+    }).join('');
+  }
+  const selectCategories = () =>{
+    let selectedCatInput = []
+
+    let selectedCatsOnLS = localStorage.getItem('selectedCatInput');
+    if(typeof(selectedCatsOnLS) === 'string' && selectedCatsOnLS.length !== 0){
+      $('#postCat').empty();
+      selectedCatsOnLS.split(',').forEach(cat => {
+        console.log('tttt', cat)
+        cat = cat.split('~');
+        
+        $('#postCat').append(
+          displayCategories(cat[0], cat[1], cat[2], 'data-form-cat-selected', cat[3])
+        )
+      })
+      selectedCatInput = selectedCatInput.concat(selectedCatsOnLS.split(','))
+    }
+
+
+
+    $('[data-form-cat]').each(function(){
+      let btn = $(this);
+      
+      
+      btn.on('click', function(){
+       
+         let isSelected =  selectedCatInput.find(catStr => { 
+          return catStr.includes(btn.text().trim())});
+         console.log('isselected',isSelected);
+         if(isSelected){
+          selectedCatInput.splice(selectedCatInput.indexOf(isSelected),1);
+         }else{
+          let btnData = btn.text().trim() + '~'+rgbToHex(btn.css('color'))+'~'+rgbToHex(btn.css('background-color'))+'~'+btn.data('id');
+          selectedCatInput.push(btnData);
+         }
+        
+
+        localStorage.setItem('selectedCatInput', selectedCatInput);
+        console.log('mycats', selectedCatInput);
+        //display selected categories in input field
+        $('#postCat').empty();
+        selectedCatInput.forEach(cat => {
+          let btnData = cat.split('~');
+
+          $('#postCat').append(
+            displayCategories(btnData[0], btnData[1], btnData[2], 'data-form-cat-selected', btnData[3])
+          )
+        })
+      })
+      
+    })
+    
+  }
   const displayAddPostPage = () =>{
+
+    let categories = localStorage.getItem('categories');
+    $('#postDate').on('click', function(){
+      $(this).trigger('focus')
+    })
+
+    if(typeof(categories) === 'string' && categories.length !== 0){
+
+      //populate category dropdown with categories
+      $('#catDropdown').empty();
+      categories.split(',').forEach(cat => {
+        cat = cat.split('~');
+        $('#catDropdown').append(
+          displayCategories(cat[0], cat[2], cat[1], 'data-form-cat', cat[3])
+        )
+      })
+
+    }
+    
+    //update layout and save state on localstorage
     $('#mainContent').hide();
     $('#addPostPage').show();
     $("#backFromPostForm").on('click', function(){
       $('#mainContent').show();
-      $('#addPostPage').hide();
-      
-
+      $('#addPostPage').hide();   
+      localStorage.setItem('isAddPostPage', false);
     }
       
     )
+    localStorage.setItem('isAddPostPage', true);
+
+    //toggle dropdown
+    $('#catDropdownToggle').on('click', function(){
+      console.log('clicked', $('#catDropdown:visible').length === 0)
+      if($('#catDropdown').css('visibility') === 'visible'){
+        $('#catDropdown').css('visibility', 'hidden');
+        console.log('enter1')
+      }else{
+        $('#catDropdown').css('visibility', 'visible');
+        console.log('enter 2')
+      }
+    })
+    //add click listeners on categories to add them into category field when selected from dropdown
+    selectCategories();
+
+    validateForm();
   }
-  const displayCategories = (cat, color, bg) => {
+  const displayCategories = (cat, color, bg, data_cat, id=false) => {
 
 
-    return `<button data-category class="category" style="color: ${color}; background-color: ${bg}">${cat}</button>`
+    return `<button ${id ? `data-id=${id} `: ''} ${data_cat}  class="category" style="color: ${color}; background-color: ${bg}">${cat}</button>`
   }
   const displayPosts = (post, single = false, swiper_class = '', timeoutId = false) => {
     console.log(post)
@@ -60,7 +156,7 @@ import Swiper from 'swiper/bundle';
     let categoryBtns = '';
     let categoryDataAttr = '';
     post.categories.forEach(function(cat, index){
-      categoryBtns += displayCategories(cat.title, cat.text_color, cat.background_color) + ' ';
+      categoryBtns += displayCategories(cat.title, cat.text_color, cat.background_color, 'data-category') + ' ';
       if(index + 1 === post.categories.length){
         categoryDataAttr += cat.title;
       }else{
@@ -156,14 +252,14 @@ import Swiper from 'swiper/bundle';
     $('#authorizationPopup').show();
     $('#popUpCheck').show();
     $('#popUpSuccess').hide();
-    $('.hint--icon-empty').hide();
-    $('.hint--icon-wrong').hide();
-    $('.hint--icon-none').hide();
+    $('#authEmailEmpty').hide();
+    $('#authEmailWrong').hide();
+    $('#authEmailNone').hide();
     $('#authSubmit').addClass('disabled');
     $('#authSubmit').prop('disabled', true);
   
       //initialize validator object
-      const authEmailValidation = new Validation();
+      const authEmailValidation = new validations.EmailValidation();
   
     $('#closeAuthPopup').on('click', function(){
       closePopUp(authEmailValidation);
@@ -322,7 +418,6 @@ import Swiper from 'swiper/bundle';
     })
     return similar_posts;
   }
-  
   const populateSwiper = (similarPosts, posts, getPostsUrl, token) => {
   
     $('#postSwiperWrapper').empty();
@@ -368,6 +463,105 @@ import Swiper from 'swiper/bundle';
   
   }
 
+  const validateForm = () =>{
+    const postValidations = new validations.PostValidations();
+    //get form elements
+    let postImg = $('#postImg');
+    let postAuthor = $('#postAuthor');
+    let postTitle = $('#postTitle');
+    let postDesc = $('#postDesc');
+    let postDate = $('#postDate');
+    let postCat = $('#postCat');
+    let postEmail = $('#postEmail');
+    let postSubmitBtn = $('#postSubmitBtn');
+
+    //set values from localstorage if they exist
+
+    if(typeof(localStorage.getItem('postImg')) === 'string' && localStorage.getItem('postImg').length !== 0){
+      postImg.val(localStorage.getItem('postImg'))
+      postImg.trigger('input');
+    }
+    if(typeof(localStorage.getItem('postAuthor')) === 'string' && localStorage.getItem('postAuthor').length !== 0){
+      postAuthor.val(localStorage.getItem('postAuthor'))
+      postAuthor.trigger('input');
+    }
+    if(typeof(localStorage.getItem('postTitle')) === 'string' && localStorage.getItem('postTitle').length !== 0){
+      postTitle.val(localStorage.getItem('postTitle'))
+      postTitle.trigger('input');
+    }
+    if(typeof(localStorage.getItem('postDesc')) === 'string' && localStorage.getItem('postDesc').length !== 0){
+      postDesc.val(localStorage.getItem('postDesc'))
+      console.log('descscds', localStorage.getItem('postDesc'))
+      postDesc.trigger('input');
+    }
+    if(typeof(localStorage.getItem('postDate')) === 'string' && localStorage.getItem('postDate').length !== 0){
+      postDate.val(localStorage.getItem('postDate'))
+      postDate.trigger('input');
+    }
+    if(typeof(localStorage.getItem('postCat')) === 'string' && localStorage.getItem('postCat').length !== 0){
+      //cast string to array
+      postCat.val(localStorage.getItem('postCat'))
+      postCat.trigger('input');
+    }
+    if(typeof(localStorage.getItem('postEmail')) === 'string' && localStorage.getItem('postEmail').length !== 0){
+      postEmail.val(localStorage.getItem('postEmail'))
+      postEmail.trigger('input');
+    }
+    
+    postImg.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postImg', postImg.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+    postAuthor.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postAuthor', postAuthor.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+    postTitle.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postTitle', postTitle.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+    postDesc.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postDesc', postDesc.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+    postDate.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postDate', postDate.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+    postCat.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postCat', postCat.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+    postEmail.on('input', function(){
+      //save on localstorage
+      localStorage.setItem('postEmail', postEmail.val().trim())
+      //check if valid
+      //apply styles
+      //update formstate -> submit button
+    });
+
+
+
+  }
+
 
   export {filterPosts, 
     displayAddPostPage, 
@@ -381,4 +575,4 @@ import Swiper from 'swiper/bundle';
     fetchSinglePost,
     findSimilarPosts,
     populateSwiper
-  };
+    };
