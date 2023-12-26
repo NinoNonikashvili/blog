@@ -8,6 +8,11 @@
         padding: 1.25rem 4.75rem;
         display: flex;
         justify-content: space-between;
+
+        &--add-post {
+            justify-content: center;
+
+        }
     }
 
     &__main {
@@ -47,12 +52,18 @@
     }
 }
 
-.single-page {
+.single-page,
+.form-page {
     padding: 4rem 4.75rem;
+}
 
+.form-page {
+    background-color: #FBFAFF;
+    height: 100vh;
 
-
-
+    &__form {
+        width: 600px;
+    }
 }
 
 .imgLabel {

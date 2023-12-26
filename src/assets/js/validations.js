@@ -2,9 +2,6 @@ export default class Validation{
 
     valIsEmailValid = false;
 
-
-    
-
     isEmailValid(elem, text){
         //btn is passed
         
@@ -74,9 +71,6 @@ export default class Validation{
                 
         }
     }
-
-
-
     setFinalStatus(elem) {
         let formStatus = this.valIsTextValid;
         if(formStatus){
