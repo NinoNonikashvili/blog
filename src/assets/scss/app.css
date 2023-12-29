@@ -1,0 +1,190 @@
+.display-page {
+  background-color: #F3F2FA;
+  margin: 0;
+  padding: 0;
+}
+.display-page__header {
+  background-color: #fff;
+  padding: 1.25rem 4.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+.display-page__header--add-post {
+  justify-content: center;
+}
+.display-page__main {
+  padding: 4rem 4.75rem;
+}
+.display-page__main__banner {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4rem;
+}
+.display-page__main__banner h1 {
+  margin-left: 0.8125rem;
+}
+.display-page__main__banner img {
+  max-width: 624px;
+}
+.display-page__main__content__categories {
+  width: -moz-fit-content;
+  width: fit-content;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+.display-page__main__content__posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.single-page,
+.form-page {
+  padding: 4rem 4.75rem;
+}
+
+.form-page {
+  background-color: #FBFAFF;
+  position: relative;
+}
+.form-page > button {
+  position: absolute;
+  top: 4rem;
+  left: 4.75rem;
+}
+.form-page__content {
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.form-page__content__form {
+  width: 100%;
+}
+.form-page__content__form .input-div__image-label > input {
+  display: none;
+}
+.form-page__content__form .input-div__image-label > .drop-zone {
+  margin-top: 0.5rem;
+  width: 37.5rem;
+  height: 11.25rem;
+  border-radius: 0.75rem;
+  border: 0.0625rem dashed #85858D;
+  background: #F4F3FF;
+  padding: 0.375rem 0.75rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.form-page__content__form .input-div__image-label > .drop-zone > p span {
+  font-weight: 600;
+  text-decoration-line: underline;
+}
+.form-page__content__form .input-div--icon.date > svg {
+  position: absolute;
+  top: 2.625rem;
+  left: 1rem;
+}
+.form-page__content__form .input-div--icon.date .input {
+  padding: 0.75rem 3rem;
+}
+.form-page__content__form .input-div--icon.cat {
+  gap: 0;
+}
+.form-page__content__form .input-div--icon.cat label {
+  margin-bottom: 0.5rem;
+}
+.form-page__content__form .input-div--icon.cat > svg {
+  position: absolute;
+  top: 2.625rem;
+  right: 1rem;
+}
+.form-page__content__form .input-div--icon.cat .input {
+  min-height: 3.0625rem;
+  padding: 0.375rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown {
+  width: 100%;
+  height: 9rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 0.0625rem solid #E4E3EB;
+  background: #FFF;
+  box-shadow: 0.125rem 0.25rem 0.5rem 0rem rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  margin-bottom: 0.5rem;
+  /* Firefox */
+  /* Chrome, Edge and Safari */
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #5D37F3 #F7F7FF;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #fff;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar-track:hover {
+  background-color: #fff;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar-track:active {
+  background-color: #fff;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #5D37F3;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: #5D37F3;
+}
+.form-page__content__form .input-div--icon.cat .cat__dropdown::-webkit-scrollbar-thumb:active {
+  background-color: #5D37F3;
+}
+.form-page__content__form .input-div > .selected-img-wrapper {
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F4F3FF;
+  border-radius: 0.75rem;
+}
+.form-page__content__form .input-div > .selected-img-wrapper > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.form-page__content > button {
+  margin-left: auto;
+  width: 50%;
+}
+
+.imgLabel {
+  width: 500px;
+  height: 400px;
+  background-color: #F3F2FA;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.imgLabel > input {
+  display: none;
+}/*# sourceMappingURL=app.css.map */
