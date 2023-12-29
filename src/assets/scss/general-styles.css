@@ -177,12 +177,13 @@ label {
 }
 
 input,
-textarea {
+textarea,
+.img-input-text {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.25rem;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
+input::-moz-placeholder, textarea::-moz-placeholder, .img-input-text::-moz-placeholder {
   color: #85858D;
   font-size: 0.875rem;
   font-style: normal;
@@ -190,7 +191,8 @@ input::-moz-placeholder, textarea::-moz-placeholder {
   line-height: 1.25rem;
 }
 input::placeholder,
-textarea::placeholder {
+textarea::placeholder,
+.img-input-text::placeholder {
   color: #85858D;
   font-size: 0.875rem;
   font-style: normal;

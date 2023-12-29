@@ -54,6 +54,8 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
 $('#singlePage').hide();
 $('#authorizationPopup').hide();
 $('#addPostPage').hide();
+$('#addPostPage').removeClass('bg-shadow');
+$('#uploadPopup').hide();
 
 
 
@@ -72,8 +74,7 @@ $('#addPostPage').hide();
     return response.json();
   })
   .then(data => {
-    console.log('categories loaded. posts: ' + postsDisplayed);
-    console.log(typeof(data.data));
+   
     let cats = [];
     $('#catWrapper').empty();
     data.data.forEach(cat => {
@@ -91,9 +92,7 @@ $('#addPostPage').hide();
       let btn = $(this);
 
       if(!btn.data('id')){
-        console.log('add listener its ok')
         btn.on('click', function(){
-          console.log('clicked')
           let btn = $(this);
             if(btn.hasClass('selected')){
               btn.removeClass('selected');
@@ -109,11 +108,9 @@ $('#addPostPage').hide();
               localStorage.setItem('selectedCategories', selectedCategories);
             }
             //filter posts
-            console.log(postsDisplayed);
             while(!postsDisplayed){
   
             }
-            console.log('posts displayed, go on filtering. ' + postsDisplayed);
             
   
             functions.filterPosts(selectedCategories);
@@ -122,7 +119,6 @@ $('#addPostPage').hide();
       }
       
 
-        console.log('check cat during load: ', selectedCategories.includes(btn.text().trim()))
       if(selectedCategories.includes(btn.text().trim())){
         btn.addClass('selected');
       }
@@ -150,20 +146,17 @@ $('#addPostPage').hide();
     return response.json();
   })
   .then(data => {
-    console.log(data);
     //display posts
     posts = data.data;
     $('#postsWrapper').empty();
     data.data.forEach(post => {
       let checkDate = functions.isDatePastOrPresent(post.publish_date, "Asia/Tbilisi");
-      console.log('checked date is true '+checkDate)
       if(checkDate === true){
         $('#postsWrapper').append(
         
           functions.displayPosts(post)
         ) 
       }else{
-        console.log('implement schedule')
         let appendPost = (id) =>{
           $('#postsWrapper').append(
         
@@ -171,8 +164,7 @@ $('#addPostPage').hide();
           )
         }
         let id = setTimeout(appendPost, checkDate, id);
-        clearTimeout(id);
-        console.log(id);
+        // clearTimeout(id);
       }
       functions.filterPosts(selectedCategories);
       
@@ -224,7 +216,6 @@ if(isSinglePage === 'true'){
     return response.json();
   })
   .then(data => {
-    console.log(data);
     //display posts
     posts = data.data;
     functions.fetchSinglePost(singlePostId, posts, getPostsUrl, token);
@@ -245,7 +236,7 @@ $('#login').on('click', function(){
   //update isAuthPopUp state
   localStorage.setItem('isAuthPopUp', true);
 
-  functions.setupAuthPopUp(loginUrl, token);
+  functions.setupAuthPopUp(baseUrl, token);
 
 
 })
@@ -256,7 +247,7 @@ $('#login').on('click', function(){
 //display popup if displayed before refresh
 if(isAuthPopUp === 'true') {
 
-  functions.setupAuthPopUp(loginUrl, token);
+  functions.setupAuthPopUp(baseUrl, token);
 
 
   if(typeof(authEmail)=== 'string' && authEmail.length !== 0){

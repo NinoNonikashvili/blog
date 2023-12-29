@@ -180,7 +180,57 @@
                 <h2>ბლოგის დამატება</h2>
                 <div class="form-page__content__form form">
                     <div class="input-div input-div--full-length img">
-                        <label for="postImg">ატვირთეთ ფოტო *</label>
+                        <label class="input-div__image-label" for="postImg">ატვირთეთ ფოტო *
+                            <div class="drop-zone" id="dropZone">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path opacity="0.4"
+                                        d="M36.233 15.7333H3.33301V10.7C3.33301 6.63333 6.63301 3.33333 10.6997 3.33333H14.583C17.2997 3.33333 18.1497 4.21667 19.233 5.66667L21.5663 8.76667C22.083 9.45 22.1497 9.55 23.1163 9.55H27.7663C31.7163 9.53333 35.083 12.1333 36.233 15.7333Z"
+                                        fill="#5D37F3" />
+                                    <path
+                                        d="M36.6497 18.0667C36.6163 17.25 36.483 16.4833 36.233 15.7333H3.33301V27.75C3.33301 32.6667 7.33301 36.6667 12.2497 36.6667H27.7497C32.6663 36.6667 36.6663 32.6667 36.6663 27.75V18.45C36.6663 18.3333 36.6663 18.1833 36.6497 18.0667ZM24.1663 27.0833H21.3497V30C21.3497 30.6833 20.783 31.25 20.0997 31.25C19.4163 31.25 18.8497 30.6833 18.8497 30V27.0833H15.833C15.1497 27.0833 14.583 26.5167 14.583 25.8333C14.583 25.15 15.1497 24.5833 15.833 24.5833H18.8497V21.6667C18.8497 20.9833 19.4163 20.4167 20.0997 20.4167C20.783 20.4167 21.3497 20.9833 21.3497 21.6667V24.5833H24.1663C24.8497 24.5833 25.4163 25.15 25.4163 25.8333C25.4163 26.5167 24.8497 27.0833 24.1663 27.0833Z"
+                                        fill="#5D37F3" />
+                                </svg>
+                                <img src="" alt="" id="myImg">
+                                <p class="img-input-text ">ჩააგდეთ ფაილი აქ ან <span>აირჩიეთ ფაილი</span></p>
+                            </div>
+
+                        </label>
+                        <div class="selected-img-wrapper" id="selectedImgWrapper">
+                            <div>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="vuesax/bulk/gallery">
+                                        <g id="gallery">
+                                            <path id="Vector" opacity="0.4"
+                                                d="M22 7.81V13.9L20.37 12.5C19.59 11.83 18.33 11.83 17.55 12.5L13.39 16.07C12.61 16.74 11.35 16.74 10.57 16.07L10.23 15.79C9.52 15.17 8.39 15.11 7.59 15.65L2.67 18.95L2.56 19.03C2.19 18.23 2 17.28 2 16.19V7.81C2 4.17 4.17 2 7.81 2H16.19C19.83 2 22 4.17 22 7.81Z"
+                                                fill="#85858D" />
+                                            <path id="Vector_2"
+                                                d="M9.00012 10.38C10.3146 10.38 11.3801 9.31443 11.3801 8C11.3801 6.68556 10.3146 5.62 9.00012 5.62C7.68568 5.62 6.62012 6.68556 6.62012 8C6.62012 9.31443 7.68568 10.38 9.00012 10.38Z"
+                                                fill="#85858D" />
+                                            <path id="Vector_3"
+                                                d="M21.9996 13.9001V16.1901C21.9996 19.8301 19.8296 22.0001 16.1896 22.0001H7.80957C5.25957 22.0001 3.41957 20.9301 2.55957 19.0301L2.66957 18.9501L7.58957 15.6501C8.38957 15.1101 9.51957 15.1701 10.2296 15.7901L10.5696 16.0701C11.3496 16.7401 12.6096 16.7401 13.3896 16.0701L17.5496 12.5001C18.3296 11.8301 19.5896 11.8301 20.3696 12.5001L21.9996 13.9001Z"
+                                                fill="#85858D" />
+                                        </g>
+                                    </g>
+                                </svg>
+                                <p></p>
+                            </div>
+
+                            <svg id="deleteSelectedImg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="vuesax/linear/add">
+                                    <g id="vuesax/linear/add_2">
+                                        <g id="add">
+                                            <path id="Vector" d="M7.75732 16.2426L16.2426 7.75736" stroke="#1A1A1F"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path id="Vector_2" d="M16.2426 16.2426L7.75732 7.75736" stroke="#1A1A1F"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
                         <input class="img input" name="image" id="postImg" type="file" style="display: none;">
 
                     </div>
@@ -196,7 +246,7 @@
                     <div class="input-div title">
                         <label for="postTitle">სათაური *</label>
                         <input class="title input" name="title" id="postTitle">
-                        <p class="hint" id="postTitleWrong">მინიმუმ 4 სიმბოლო</p>
+                        <p class="hint" id="postTitleWrong">მინიმუმ 2 სიმბოლო</p>
                     </div>
                     <div class="input-div input-div--full-length description">
                         <label for="postDescription">აღწერა *</label>
@@ -249,23 +299,7 @@
                                 </g>
                             </g>
                         </svg>
-                        <!-- <p class="hint--icon-empty hint--icon-error" id="postDateEmpty">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="vuesax/linear/info-circle">
-                                    <g id="info-circle">
-                                        <path id="Vector"
-                                            d="M10.0002 1.66666C5.41683 1.66666 1.66683 5.41666 1.66683 10C1.66683 14.5833 5.41683 18.3333 10.0002 18.3333C14.5835 18.3333 18.3335 14.5833 18.3335 10C18.3335 5.41666 14.5835 1.66666 10.0002 1.66666Z"
-                                            fill="#EA1919" />
-                                        <path id="Vector_2" d="M10 13.3333L10 9.16666" stroke="white" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path id="Vector_3" d="M10.0044 6.66667L9.99691 6.66667" stroke="white"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </g>
-                                </g>
-                            </svg>
-                            <span>ელ-ფოსტა ცარიელია</span>
-                        </p> -->
+
 
                     </div>
                     <div class="input-div input-div--icon cat">
@@ -292,7 +326,7 @@
                     <div class="input-div email">
                         <label for="email">ელ-ფოსტა</label>
                         <input class="input" placeholder="Example@redberry.ge" name="email" id="postEmail">
-                        <p class="hint--icon-wrong hint--icon-error" id="postEmailWrong">
+                        <p class="hint--icon-wrong hint--icon-error" id="postEmailWrong" style="display:none">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g id="vuesax/linear/info-circle">
@@ -316,6 +350,35 @@
             </div>
 
         </div>
+    </div>
+    <div id="uploadPopup" class="popup">
+        <svg id="closeUploadPopup" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <g id="vuesax/linear/add">
+                <g id="vuesax/linear/add_2">
+                    <g id="add">
+                        <path id="Vector" d="M7.75732 16.2426L16.2426 7.75736" stroke="#1A1A1F" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path id="Vector_2" d="M16.2426 16.2426L7.75732 7.75736" stroke="#1A1A1F" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+
+        <div class="popup__success" id="popUpSuccessUpload">
+            <button class="round round--green">
+                <svg xmlns="http://www.w3.org/2000/svg" height="22" width="18"
+                    viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+                    <path opacity="1" fill="#fff"
+                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                </svg>
+            </button>
+            <h4>ჩანაწი წარმატებით დაემატა</h4>
+            <button id="uploadSuccessBtn">მთავარ გვერდზე დაბრუნება</button>
+        </div>
+
+
     </div>
 
 

@@ -80,94 +80,150 @@
         &__form {
             width: 100%;
 
-            .input-div--icon.date {
-                &>svg {
-                    position: absolute;
-                    top: 2.625rem;
-                    left: 1rem;
+            .input-div {
+
+                &__image-label {
+
+
+                    &>input {
+                        display: none;
+                    }
+
+                    &>.drop-zone {
+                        margin-top: 0.5rem;
+                        width: 37.5rem;
+                        height: 11.25rem;
+                        border-radius: 0.75rem;
+                        border: 0.0625rem dashed #85858D;
+                        background: #F4F3FF;
+                        // display: inline-block;
+                        padding: 0.375rem 0.75rem;
+                        cursor: pointer;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 1.5rem;
+
+                        &>p {
+                            span {
+                                font-weight: 600;
+                                text-decoration-line: underline;
+                            }
+                        }
+                    }
+
+
                 }
 
-                .input {
-                    padding: 0.75rem 3rem;
-                }
-            }
+                &--icon.date {
+                    &>svg {
+                        position: absolute;
+                        top: 2.625rem;
+                        left: 1rem;
+                    }
 
-            .input-div--icon.cat {
-                gap: 0;
-
-                label {
-                    margin-bottom: 0.5rem;
-                }
-
-                &>svg {
-                    position: absolute;
-                    top: 2.625rem;
-                    right: 1rem;
+                    .input {
+                        padding: 0.75rem 3rem;
+                    }
                 }
 
-                .input {
-                    min-height: 3.0625rem;
+                &--icon.cat {
+                    gap: 0;
+
+                    label {
+                        margin-bottom: 0.5rem;
+                    }
+
+                    &>svg {
+                        position: absolute;
+                        top: 2.625rem;
+                        right: 1rem;
+                    }
+
+                    .input {
+                        min-height: 3.0625rem;
+                        padding: 0.375rem;
+                        display: flex;
+                        gap: 0.5rem;
+                        flex-wrap: wrap;
+                        // overflow-x: scroll;
+                    }
+
+                    .cat__dropdown {
+                        width: 100%;
+                        height: 9rem;
+                        padding: 1rem;
+                        border-radius: 0.75rem;
+                        border: 0.0625rem solid #E4E3EB;
+                        background: #FFF;
+                        box-shadow: 0.125rem 0.25rem 0.5rem 0rem rgba(0, 0, 0, 0.08);
+                        display: flex;
+                        gap: 0.5rem;
+                        flex-wrap: wrap;
+                        overflow-y: scroll;
+                        margin-bottom: 0.5rem;
+
+                        /* Firefox */
+                        & {
+                            scrollbar-width: thin;
+                            scrollbar-color: #5D37F3 #F7F7FF;
+                        }
+
+                        /* Chrome, Edge and Safari */
+                        &::-webkit-scrollbar {
+                            height: 8px;
+                            width: 8px;
+                        }
+
+                        &::-webkit-scrollbar-track {
+                            border-radius: 5px;
+                            background-color: #fff;
+                        }
+
+                        &::-webkit-scrollbar-track:hover {
+                            background-color: #fff;
+                        }
+
+                        &::-webkit-scrollbar-track:active {
+                            background-color: #fff;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            border-radius: 5px;
+                            background-color: #5D37F3;
+                        }
+
+                        &::-webkit-scrollbar-thumb:hover {
+                            background-color: #5D37F3;
+                        }
+
+                        &::-webkit-scrollbar-thumb:active {
+                            background-color: #5D37F3;
+                        }
+
+
+                    }
+                }
+
+                &>.selected-img-wrapper {
+                    padding: 18px;
                     display: flex;
-                    gap: 0.5rem;
-                    flex-wrap: wrap;
-                    // overflow-x: scroll;
-                }
-
-                .cat__dropdown {
-                    width: 100%;
-                    height: 9rem;
-                    padding: 1rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    background: #F4F3FF;
                     border-radius: 0.75rem;
-                    border: 0.0625rem solid #E4E3EB;
-                    background: #FFF;
-                    box-shadow: 0.125rem 0.25rem 0.5rem 0rem rgba(0, 0, 0, 0.08);
-                    display: flex;
-                    gap: 0.5rem;
-                    flex-wrap: wrap;
-                    overflow-y: scroll;
-                    margin-bottom: 0.5rem;
 
-                    /* Firefox */
-                    & {
-                        scrollbar-width: thin;
-                        scrollbar-color: #5D37F3 #F7F7FF;
+                    &>div {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 0.5rem;
                     }
-
-                    /* Chrome, Edge and Safari */
-                    &::-webkit-scrollbar {
-                        height: 8px;
-                        width: 8px;
-                    }
-
-                    &::-webkit-scrollbar-track {
-                        border-radius: 5px;
-                        background-color: #fff;
-                    }
-
-                    &::-webkit-scrollbar-track:hover {
-                        background-color: #fff;
-                    }
-
-                    &::-webkit-scrollbar-track:active {
-                        background-color: #fff;
-                    }
-
-                    &::-webkit-scrollbar-thumb {
-                        border-radius: 5px;
-                        background-color: #5D37F3;
-                    }
-
-                    &::-webkit-scrollbar-thumb:hover {
-                        background-color: #5D37F3;
-                    }
-
-                    &::-webkit-scrollbar-thumb:active {
-                        background-color: #5D37F3;
-                    }
-
-
                 }
             }
+
+
         }
 
         &>button {
