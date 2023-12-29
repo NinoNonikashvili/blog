@@ -339,14 +339,15 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
     //clear localstorage post data
     localStorage.setItem('postTitle', '');
     localStorage.setItem('postDesc', '');
-    localStorage.setItem("image", '');
+    localStorage.setItem('image', '');
     localStorage.setItem('postAuthor', '');
     localStorage.setItem('postDate', '');
-    localStorage.getItem('selectedCatInput', '')
+    localStorage.removeItem('selectedCatInput');
     localStorage.setItem('postEmail', '');
     //clear inputs
      $('#selectedImgWrapper').hide();
      $('#dropZone').show();
+
      $('#postAuthor').val('');
      $('#postAuthor').removeClass('input--success');
      $('#postTitle').val('');
@@ -355,8 +356,10 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
      $('#postDesc').removeClass('input--success');
      $('#postDate').val('');
      $('#postDate').removeClass('input--success');
+
      $('#postCat').empty();
      $('#postCat').removeClass('input--success');
+
      $('#postEmail').val('');
      $('#postEmail').removeClass('input--success');
      $('#postAuthorWrongLang').removeClass('hint--success');
@@ -614,8 +617,6 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
 
            // Use the first selected file
            const selectedFile = img.prop('files')[0];
-
-
            const reader = new FileReader();
 
             reader.addEventListener('load', () => {
@@ -704,7 +705,7 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
 
 
 
-    if(typeof(localStorage.getItem('postImg')) === 'string' && localStorage.getItem('postImg').length !== 0){
+    if(typeof(localStorage.getItem('image')) === 'string' && localStorage.getItem('image').length !== 0){
       $('#dropZone').hide();
       $('#selectedImgWrapper').show();
       $('#selectedImgWrapper').children('div').children('p').text(localStorage.getItem('postImgName'));
@@ -732,6 +733,7 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
     //category is handles differently in selectCategory
     if(typeof(localStorage.getItem('selectedCatInput')) === 'string' && localStorage.getItem('selectedCatInput').length !== 0){
       //cast string to array
+      console.log('entered here')
       postValidations.valIsCatValid = true;
     }
     if(typeof(localStorage.getItem('postEmail')) === 'string'){

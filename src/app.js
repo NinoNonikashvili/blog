@@ -16,7 +16,10 @@ import 'swiper/css/bundle';
 
 $(function() {
 
+  //clear data
   // localStorage.clear()
+  
+
   let selectedCategories;
   if(localStorage.getItem('selectedCategories')){
     selectedCategories = localStorage.getItem('selectedCategories').split(',');
