@@ -5,15 +5,20 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: './src/app.js',
+    entry: {
+      app: './src/app.js',
+    },
     output: {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+      // new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
+    
+       
         }),
-      //  new CleanWebpackPlugin()
+
       
     ],
     module: {
@@ -30,6 +35,10 @@ module.exports = {
             ],
           },
           {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
+          },
+          {
             test: /\.(woff|woff2|eot|ttf|otf)$/,
             use: [
               {
@@ -39,6 +48,7 @@ module.exports = {
                 },
               },
             ],
+          
       
           },
           {
@@ -46,6 +56,7 @@ module.exports = {
             use:[
               {
                 loader: 'file-loader',
+                // type: "asset",
                 options: {
                   name: '[name].[ext]',
                   outputPath: 'imgs/'
@@ -53,9 +64,22 @@ module.exports = {
               }
               
             ]
+          },
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env']
+              }
+            }
           }
         ],
 
       },
+    optimization: {
+        runtimeChunk: 'single'
+    },
 
 }
