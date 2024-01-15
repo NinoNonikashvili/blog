@@ -270,8 +270,10 @@ if($('#addPost').css('display') !== 'none'){
   })
 }
 
+console.log('btn click triggered app js? ' + isAddPostPage)
 //if create-post-page was displayed before refresh, display again
 if(isAddPostPage === 'true'){
+  
   functions.displayAddPostPage();
 }
 

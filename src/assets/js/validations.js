@@ -227,11 +227,9 @@ class PostValidations{
     }
     isCatValid(elem){
         let cats = localStorage.getItem('selectedCatInput');
-        let cat_ids = [];
         if(typeof(cats) === 'string' && cats.length !== 0){
             this.valIsCatValid = true;
             this.applyCatStyles(elem, true)
-            //return cat_ids
         }else{
             this.valIsCatValid = false;
             this.applyCatStyles(elem, false)

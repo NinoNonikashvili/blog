@@ -125,13 +125,23 @@ const token = 'Bearer d2e9a0063133e84f32659f466d83c70750661bb2059e30a473ee062dee
     localStorage.setItem('isAddPostPage', true);
 
     //toggle dropdown
-    $('#catDropdownToggle').on('click', function(){
-      if($('#catDropdown').css('visibility') === 'visible'){
-        $('#catDropdown').css('visibility', 'hidden');
-      }else{
-        $('#catDropdown').css('visibility', 'visible');
-      }
-    })
+    
+    // Check if the click handler is already attached before adding it
+    if (!$('#catDropdownToggle').data('clickHandlerAttached')) {
+      // Add the click handler
+      $('#catDropdownToggle').on('click', function(){
+        if($('#catDropdown').css('visibility') === 'visible'){
+          $('#catDropdown').css('visibility', 'hidden');
+        }else{
+          $('#catDropdown').css('visibility', 'visible');
+        }
+      })
+
+      // Set a flag to indicate that the click handler is attached
+      $('#catDropdownToggle').data('clickHandlerAttached', true);
+    }
+
+
 
   
 
